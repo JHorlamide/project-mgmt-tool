@@ -5,6 +5,10 @@ import {
 } from "./chains/riskAssessmentUtils";
 
 export const analyzeProjectText = async (projectText: string) => {
+  if (!projectText) {
+    throw new Error('Project text is required for analysis.');
+  }
+
   try {
     const [summarizedDoc, keyAreasOfRisk, ragStatus] = await Promise.all([
       summarizeDoc(projectText),
@@ -13,9 +17,9 @@ export const analyzeProjectText = async (projectText: string) => {
     ]);
 
     return {
-      summary: summarizedDoc.text,
-      keyAreasOfRisk: keyAreasOfRisk.text,
-      ragStatus: ragStatus.text
+      summary: summarizedDoc.text.trim(),
+      keyAreasOfRisk: keyAreasOfRisk.text.trim(),
+      ragStatus: ragStatus.text.trim()
     };
   } catch (error: any) {
     throw new Error(`Error analyzing project text: ${error.message}`);
