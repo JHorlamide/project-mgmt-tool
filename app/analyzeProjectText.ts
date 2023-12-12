@@ -1,8 +1,5 @@
-import {
-  summarizeDoc,
-  extractKeyAreasOfRisk,
-  determineRagStatus
-} from "./chains/riskAssessmentUtils";
+import { projectRiskAss } from "./chains/riskAssessmentUtils";
+
 
 export const analyzeProjectText = async (projectText: string) => {
   if (!projectText) {
@@ -11,9 +8,9 @@ export const analyzeProjectText = async (projectText: string) => {
 
   try {
     const [summarizedDoc, keyAreasOfRisk, ragStatus] = await Promise.all([
-      summarizeDoc(projectText),
-      extractKeyAreasOfRisk(projectText),
-      determineRagStatus(projectText)
+      projectRiskAss.summarizeDoc(projectText),
+      projectRiskAss.extractKeyAreasOfRisk(projectText),
+      projectRiskAss.determineRagStatus(projectText)
     ]);
 
     return {
